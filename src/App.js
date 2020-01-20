@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ReviewList from './components/reviews/review-list/review-list';
+import GitHubLogin from 'react-github-login';
+const onSuccess = response => {
+  localStorage.setItem('token', response.code);
+  console.log(response);
+}
+const onFailure = response => console.error(response);
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GitHubLogin clientId="9ab5030f2bbfc507d223"
+       redirectUri=''
+       onSuccess={onSuccess}
+       onFailure={onFailure}/>
+      <ReviewList />
     </div>
   );
 }
