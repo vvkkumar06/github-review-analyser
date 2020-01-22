@@ -6,7 +6,7 @@ export const getReviews = () => {
         method: 'get',
         url: `https://api.github.com/repos/vvkkumar06/contact-manager/pulls/comments`,
         headers: {
-            'Authorization': `token 1215202c18b38dce14c77cbf70d616225dca8e13`
+            'Authorization': `token 350313340e329c19f3c7a6514fe902119185e041`
         }
     })
 }

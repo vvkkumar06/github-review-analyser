@@ -47,19 +47,23 @@ function categorizeReviews(reviews){
         }
         else if(checkReviewType(review, 'design')){
             review.body = review.body.slice('design'.length+1);
+            design.push(review);
+        }
+        else if(checkReviewType(review, 'doc')){
+            review.body = review.body.slice('doc'.length+1);
             doc.push(review);
         }
         else if(checkReviewType(review, 'validation')){
             review.body = review.body.slice('validation'.length+1);
-            style.push(review);
+            validation.push(review);
         }
         else if(checkReviewType(review, 'test')){
             review.body = review.body.slice('test'.length+1);
-            standard.push(review);
+            test.push(review);
         }
         else if(checkReviewType(review, 'security')){
             review.body = review.body.slice('security'.length+1);
-            standard.push(review);
+            security.push(review);
         }
         else {
             general.push(review);
