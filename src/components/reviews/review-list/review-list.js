@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionGetReviews } from './../../../actions/reviews'
-import { Grid, Paper, Tab, Tabs } from '@material-ui/core';
-import { Phone as PhoneIcon, Favorite as FavoriteIcon, PersonPin as PersonPinIcon } from '@material-ui/icons';
+import { Grid, AppBar, Paper, Tab, Tabs } from '@material-ui/core';
 import Reviews from './../reviews/reviews';
-
+import TabPanel from './../../shared/tab-panel';
+import ReviewsChart from '../../shared/reviews-chart';
+import ReviewsStatusChart from '../../shared/reviews-status-chart';
 
 class ReviewList extends Component {
     constructor(props) {
@@ -19,54 +20,72 @@ class ReviewList extends Component {
     handleChange = (event, newValue) => {
         this.setState({ value: newValue });
     };
+
+    a11yProps = (index) => {
+        return {
+            id: `vertical-tab-${index}`,
+            'aria-controls': `vertical-tabpanel-${index}`
+        };
+      }
     render() {
         const { reviews } = this.props;
         const { value } = this.state;
         return (
-            <Grid container spacing={2} style={{ display: 'flex', flexFlow: 'column wrap' }} >
-                <Grid item xs={12}>
-                    <Paper square>
-                        <Tabs
-                            value={value}
-                            onChange={this.handleChange}
-                            variant="fullWidth"
-                            indicatorColor="secondary"
-                            textColor="secondary"
-                            aria-label="icon label tabs example"
-                        >
-                            <Tab icon={PhoneIcon} label="RECENTS" />
-                            <Tab icon={PhoneIcon} label="FAVORITES" />
-                            <Tab icon={PhoneIcon} label="NEARBY" />
-                        </Tabs>
-                    </Paper>
+            <Grid container spacing={2} >
+                 <Grid item xs={6}>
+                    <ReviewsChart reviews={reviews}/>
                 </Grid>
                 <Grid item xs={6}>
-                    <Reviews reviews={reviews} type='general' rowsPerPage='5' />
+                    <ReviewsStatusChart reviews={reviews}/>
                 </Grid>
-                <Grid item xs={6}>
-                    <Reviews reviews={reviews} type='doc' rowsPerPage='5' />
+                <Grid item xs="12">
+                    <Grid container spacing={2}>
+                        <Grid item xs="3" xm="3" md="2" lg="2">
+                            <AppBar position="static">
+                                <Tabs value={value} orientation="vertical" variant="scrollable" onChange={this.handleChange}>
+                                    <Tab label="general" {...this.a11yProps(0)} />
+                                    <Tab label="standard" {...this.a11yProps(1)} />
+                                    <Tab label="doc" {...this.a11yProps(2)} />
+                                    <Tab label="logic" {...this.a11yProps(3)} />
+                                    <Tab label="style" {...this.a11yProps(4)} />
+                                    <Tab label="design" {...this.a11yProps(5)} />
+                                    <Tab label="validation" {...this.a11yProps(6)} />
+                                    <Tab label="security" {...this.a11yProps(7)} />
+                                </Tabs>
+                            </AppBar>
+                        </Grid>
+                        <Grid item xs="9" xm="9" md="10" lg="10">
+                            <Paper>
+
+                                <TabPanel value={value} index={0}>
+                                    <Reviews reviews={reviews} type='general' rowsPerPage='5' />
+                                </TabPanel>
+                                <TabPanel value={value} index={1}>
+                                    <Reviews reviews={reviews} type='standard' rowsPerPage='5' />
+                                </TabPanel>
+                                <TabPanel value={value} index={2}>
+                                    <Reviews reviews={reviews} type='doc' rowsPerPage='5' />
+                                </TabPanel>
+                                <TabPanel value={value} index={3}>
+                                    <Reviews reviews={reviews} type='logic' rowsPerPage='5' />
+                                </TabPanel>
+                                <TabPanel value={value} index={4}>
+                                    <Reviews reviews={reviews} type='style' rowsPerPage='5' />
+                                </TabPanel>
+                                <TabPanel value={value} index={5}>
+                                    <Reviews reviews={reviews} type='design' rowsPerPage='5' />
+                                </TabPanel>
+                                <TabPanel value={value} index={6}>
+                                    <Reviews reviews={reviews} type='validation' rowsPerPage='5' />
+                                </TabPanel>
+                                <TabPanel value={value} index={7}>
+                                    <Reviews reviews={reviews} type='security' rowsPerPage='5' />
+                                </TabPanel>
+                            </Paper>
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    <Reviews reviews={reviews} type='standard' rowsPerPage='5' />
-                </Grid>
-                <Grid item xs={6}>
-                    <Reviews reviews={reviews} type='logic' rowsPerPage='5' />
-                </Grid>
-                <Grid item xs={6}>
-                    <Reviews reviews={reviews} type='style' rowsPerPage='5' />
-                </Grid>
-                <Grid item xs={6}>
-                    <Reviews reviews={reviews} type='design' rowsPerPage='5' />
-                </Grid>
-                <Grid item xs={6}>
-                    <Reviews reviews={reviews} type='test' rowsPerPage='5' />
-                </Grid>
-                <Grid item xs={6}>
-                    <Reviews reviews={reviews} type='validation' rowsPerPage='5' />
-                </Grid>
-                <Grid item xs={6}>
-                    <Reviews reviews={reviews} type='security' rowsPerPage='5' />
-                </Grid>
+               
             </Grid>
         )
     }

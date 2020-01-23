@@ -17,17 +17,26 @@ function Reviews(props) {
         { id: 'path', label: 'File', minWidth: 150 },
         { id: 'pull_request_url', label: 'PR No', minWidth: 150, align: 'center' },
         { id: 'created_at', label: 'Date', minWidth: 100 }
-    ];
-    const page = 0;
-    const { reviews, rowsPerPage, type } = props;
+    ]
+    const { reviews, type } = props;
     const rows = reviews[type];
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+      };
+    
+      const handleChangeRowsPerPage = event => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+      };
     return (
         <Paper>
-            <AppBar style={{ height: '50px', marginBottom: '20px', display: 'flex', justifyContent: 'center', flexDirection: 'row', alignItems: 'center' }} position="static">
+            {/* <AppBar style={{ height: '50px', marginBottom: '20px', display: 'flex', justifyContent: 'center', flexDirection: 'row', alignItems: 'center' }} position="static">
                 <Typography variant="h5" gutterBottom style={{ textAlign: 'center' }}>
                     {type}
             </Typography>
-            </AppBar>
+            </AppBar> */}
             <TableContainer style={{ maxHeight: '740px' }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -36,7 +45,6 @@ function Reviews(props) {
                                 <TableCell
                                     key={column.id}
                                     align={column.align}
-                                    style={{ minWidth: column.minWidth }}
                                 >
                                     {column.label}
                                 </TableCell>
@@ -61,9 +69,9 @@ function Reviews(props) {
                                         }
 
                                         return (
-                                            <TableCell key={column.id} align={column.align}>
+                                            <TableCell key={column.id} style={{padding: 5, maxWidth: '50px', wordWrap: 'break-word'}} align={column.align}>
                                                 {
-                                                    isAvatarUrl ? <img src={value} width="50" height="50" /> :
+                                                    isAvatarUrl ? <img src={value} width="30" height="30" /> :
 
                                                         (column.id === 'body') ? <a target="_blank" href={row.html_url}>{value}</a> :
 
@@ -81,13 +89,13 @@ function Reviews(props) {
                 </Table>
             </TableContainer>
             <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
+                rowsPerPageOptions={[5, 10, 15]}
                 component="div"
                 count={rows && rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-            // onChangePage={handleChangePage}
-            // onChangeRowsPerPage={handleChangeRowsPerPage}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
             />
         </Paper>
     )
