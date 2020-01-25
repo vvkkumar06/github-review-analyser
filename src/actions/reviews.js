@@ -41,6 +41,10 @@ function categorizeReviews(reviews){
             review.body = review.body.slice('style'.length+1);
             style.push(review);
         }
+        else if(checkReviewType(review, 'doc')){
+            review.body = review.body.slice('doc'.length+1);
+            doc.push(review);
+        }
         else if(checkReviewType(review, 'standard')){
             review.body = review.body.slice('standard'.length+1);
             standard.push(review);
@@ -48,10 +52,6 @@ function categorizeReviews(reviews){
         else if(checkReviewType(review, 'design')){
             review.body = review.body.slice('design'.length+1);
             design.push(review);
-        }
-        else if(checkReviewType(review, 'doc')){
-            review.body = review.body.slice('doc'.length+1);
-            doc.push(review);
         }
         else if(checkReviewType(review, 'validation')){
             review.body = review.body.slice('validation'.length+1);

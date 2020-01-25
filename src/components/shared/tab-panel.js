@@ -1,17 +1,12 @@
 import React from 'react';
-import { Typography, Box } from '@material-ui/core';
 
-function TabPanel(props) {
-   const { children, value, index, ...other } = props;
+function TabPanel({ children, value, index }) {
 
-   return (
-      <div role="tabpanel"
-         hidden={value !== index}
-         id={`scrollable-prevent-tabpanel-${index}`}
-         aria-labelledby={`scrollable-prevent-tab-${index}`} >
-         {props.children}
-      </div>
-   );
-}
+    return (
+     <div hidden={value !== index}  id={`vertical-tabpanel-${index}`} aria-labelledby={`vertical-tab-${index}`}>
+        {children}
+     </div>
+    );
+  }
 
 export default TabPanel;

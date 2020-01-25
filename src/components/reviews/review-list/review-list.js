@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionGetReviews } from './../../../actions/reviews'
-import { Grid, AppBar, Tab, Tabs  } from '@material-ui/core';
-import { Phone as PhoneIcon, Favorite as FavoriteIcon, PersonPin as PersonPinIcon } from '@material-ui/icons';
+import { Grid, Paper, Tab, Tabs } from '@material-ui/core';
 import Reviews from './../reviews/reviews';
 import TabPanel from './../../shared/tab-panel';
+import TotalReviewsPieChart from '../../shared/total-reviews-pie-chart';
+import ReviewsStatusBarChart from '../../shared/reviews-status-bar-chart';
+import ReviewCount from '../../shared/review-count';
 
 class ReviewList extends Component {
     constructor(props) {
@@ -22,58 +24,82 @@ class ReviewList extends Component {
 
     a11yProps = (index) => {
         return {
-          id: `simple-tab-${index}`,
-          'aria-controls': `simple-tabpanel-${index}`,
+            id: `vertical-tab-${index}`,
+            'aria-controls': `vertical-tabpanel-${index}`
         };
-      }
+    }
     render() {
         const { reviews } = this.props;
         const { value } = this.state;
         return (
-            <Grid container spacing={2} style={{ display: 'flex', flexFlow: 'column wrap' }} >
-                <Grid item xs={12}>
-                <AppBar position="static">
-                <h1 style={{textAlign: 'center'}}>Github Review Analyser</h1>
-                <Tabs value={value} onChange={this.handleChange} aria-label="simple tabs example">
-                    <Tab label="general" {...this.a11yProps(0)} />
-                    <Tab label="doc" {...this.a11yProps(1)} />
-                    <Tab label="standard" {...this.a11yProps(2)} />
-                    <Tab label="logic" {...this.a11yProps(3)} />
-                    <Tab label="style" {...this.a11yProps(4)} />
-                    <Tab label="design" {...this.a11yProps(5)} />
-                    <Tab label="test" {...this.a11yProps(6)} />
-                    <Tab label="validation" {...this.a11yProps(7)} />
-                    <Tab label="security" {...this.a11yProps(8)} />
-                </Tabs>
-                </AppBar>
-                    <TabPanel value={value} index={0}>
-                        <Reviews reviews={reviews} type='general'/>
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <Reviews reviews={reviews} type='doc' />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        <Reviews reviews={reviews} type='standard' />
-                    </TabPanel>
-                    <TabPanel value={value} index={3}>
-                        <Reviews reviews={reviews} type='logic' />
-                    </TabPanel>
-                    <TabPanel value={value} index={4}>
-                        <Reviews reviews={reviews} type='style' />
-                    </TabPanel>
-                    <TabPanel value={value} index={5}>
-                        <Reviews reviews={reviews} type='design' />
-                    </TabPanel>
-                    <TabPanel value={value} index={6}>
-                        <Reviews reviews={reviews} type='test' />
-                    </TabPanel>
-                    <TabPanel value={value} index={7}>
-                        <Reviews reviews={reviews} type='validation' />
-                    </TabPanel>
-                    <TabPanel value={value} index={8}>
-                        <Reviews reviews={reviews} type='security' />
-                    </TabPanel>
+            <Grid container spacing={2} >
+                <Grid item xs={6}>
+                    <TotalReviewsPieChart reviews={reviews} />
                 </Grid>
+                <Grid item xs={6}>
+                    <ReviewsStatusBarChart reviews={reviews} />
+                </Grid>
+                <Grid item xs={12} style={{ margin: "50px" }}>
+                    <Grid container spacing={3} >
+                        <Grid container xs={3} justify="center">
+                            <ReviewCount type="general" count={reviews['general'] && reviews['general'].length} />
+                        </Grid>
+                        <Grid container xs={3} justify="center">
+                            <ReviewCount type="standard" count={reviews['standard'] && reviews['standard'].length} />
+                        </Grid>
+                        <Grid container xs={3} justify="center">
+                            <ReviewCount type="doc" count={reviews['doc'] && reviews['doc'].length} />
+                        </Grid>
+                        <Grid container xs={3} justify="center">
+                            <ReviewCount type="logic" count={reviews['logic'] && reviews['logic'].length} />
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs="12" >
+                    <Paper>
+                    <Grid container spacing={2} >
+                        <Grid item xs="3" xm="3" md="2" lg="2">
+                            <Tabs value={value} orientation="vertical" variant="scrollable" onChange={this.handleChange} >
+                                <Tab label="general" {...this.a11yProps(0)} />
+                                <Tab label="standard" {...this.a11yProps(1)} />
+                                <Tab label="doc" {...this.a11yProps(2)} />
+                                <Tab label="logic" {...this.a11yProps(3)} />
+                                <Tab label="style" {...this.a11yProps(4)} />
+                                <Tab label="design" {...this.a11yProps(5)} />
+                                <Tab label="validation" {...this.a11yProps(6)} />
+                                <Tab label="security" {...this.a11yProps(7)} />
+                            </Tabs>
+                        </Grid>
+                        <Grid item xs="9" xm="9" md="10" lg="10">
+                            <TabPanel value={value} index={0}>
+                                <Reviews reviews={reviews} type='general' rowsPerPage='5' />
+                            </TabPanel>
+                            <TabPanel value={value} index={1}>
+                                <Reviews reviews={reviews} type='standard' rowsPerPage='5' />
+                            </TabPanel>
+                            <TabPanel value={value} index={2}>
+                                <Reviews reviews={reviews} type='doc' rowsPerPage='5' />
+                            </TabPanel>
+                            <TabPanel value={value} index={3}>
+                                <Reviews reviews={reviews} type='logic' rowsPerPage='5' />
+                            </TabPanel>
+                            <TabPanel value={value} index={4}>
+                                <Reviews reviews={reviews} type='style' rowsPerPage='5' />
+                            </TabPanel>
+                            <TabPanel value={value} index={5}>
+                                <Reviews reviews={reviews} type='design' rowsPerPage='5' />
+                            </TabPanel>
+                            <TabPanel value={value} index={6}>
+                                <Reviews reviews={reviews} type='validation' rowsPerPage='5' />
+                            </TabPanel>
+                            <TabPanel value={value} index={7}>
+                                <Reviews reviews={reviews} type='security' rowsPerPage='5' />
+                            </TabPanel>
+                        </Grid>
+                    </Grid>
+                    </Paper>
+                </Grid>
+
             </Grid>
         )
     }
