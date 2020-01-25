@@ -18,7 +18,7 @@ class DashboardWidgetContainer extends Component {
         const { reviews } = this.props;
         const { value } = this.state;
         return (
-            <Grid container spacing={5} >
+            <Grid container spacing={5} style={{overflowX: 'hidden'}}>
                 <Grid item xs={12} sm={12} md={6}>
                     <TotalReviewsPieChart reviews={reviews} />
                 </Grid>
@@ -26,7 +26,7 @@ class DashboardWidgetContainer extends Component {
                     <ReviewsStatusBarChart reviews={reviews} />
                 </Grid>
                 <Grid item xs={12}>
-                    <ReviewsCounterContainer reviews={reviews}/>
+                    <ReviewsCounterContainer reviews={reviews} />
                 </Grid>
                 <Grid item xs="12" >
                     <ReviewsTabs reviews={reviews} />

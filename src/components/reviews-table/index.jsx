@@ -23,12 +23,12 @@ function ReviewsTable(props) {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-      };
-    
-      const handleChangeRowsPerPage = event => {
+    };
+
+    const handleChangeRowsPerPage = event => {
         setRowsPerPage(+event.target.value);
         setPage(0);
-      };
+    };
     return (
         <React.Fragment>
             <TableContainer style={{ maxHeight: '740px' }}>
@@ -45,43 +45,43 @@ function ReviewsTable(props) {
                             ))}
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        {rows && rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
-                            return (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                    {columns.map(column => {
-                                        let isAvatarUrl = false;
-                                        let value = row[column.id];
-                                        if (column.id === 'avatar_url') {
-                                            value = row['user'][column.id];
-                                            isAvatarUrl = true;
-                                        }
-                                        if (column.id === 'created_at') {
-                                            let date = new Date(value);
-                                            value = date.toDateString();
-                                        }
-                                        if (column.id ==="commit_id"){
-                                            value = row['commit_id'] === row['original_commit_id'] ? 'No' : 'Yes'
-                                        }
+                        <TableBody>
+                            {rows && rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => {
+                                return (
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                        {columns.map(column => {
+                                            let isAvatarUrl = false;
+                                            let value = row[column.id];
+                                            if (column.id === 'avatar_url') {
+                                                value = row['user'][column.id];
+                                                isAvatarUrl = true;
+                                            }
+                                            if (column.id === 'created_at') {
+                                                let date = new Date(value);
+                                                value = date.toDateString();
+                                            }
+                                            if (column.id === "commit_id") {
+                                                value = row['commit_id'] === row['original_commit_id'] ? 'No' : 'Yes'
+                                            }
 
-                                        return (
-                                            <TableCell key={column.id} style={{padding: 5, maxWidth: '50px', wordWrap: 'break-word'}} align={column.align}>
-                                                {
-                                                    isAvatarUrl ? <img src={value} width="30" height="30" /> :
+                                            return (
+                                                <TableCell key={column.id} style={{ padding: 5, maxWidth: '50px', wordWrap: 'break-word' }} align={column.align}>
+                                                    {
+                                                        isAvatarUrl ? <img src={value} width="30" height="30" /> :
 
-                                                        (column.id === 'body') ? <a target="_blank" href={row.html_url}>{value}</a> :
+                                                            (column.id === 'body') ? <a target="_blank" href={row.html_url}>{value}</a> :
 
-                                                            (column.id === 'pull_request_url') ? value.slice(value.indexOf('pull/')) : value
+                                                                (column.id === 'pull_request_url') ? value.slice(value.indexOf('pull/')) : value
 
-                                                }
-                                                <p style={{ fontSize: '10px' }}>{isAvatarUrl && row['user']['login']}</p>
-                                            </TableCell>
-                                        );
-                                    })}
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
+                                                    }
+                                                    <p style={{ fontSize: '10px' }}>{isAvatarUrl && row['user']['login']}</p>
+                                                </TableCell>
+                                            );
+                                        })}
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
                 </Table>
             </TableContainer>
             <TablePagination

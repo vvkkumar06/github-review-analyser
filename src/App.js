@@ -8,7 +8,7 @@ import Dashboard from './containers/dashboard';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
       {/* <GitHubLogin clientId="9ab5030f2bbfc507d223
 "
        redirectUri=''
