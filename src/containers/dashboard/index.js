@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -18,7 +18,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Constants from './../../utils/constants';
-import ReviewList from './../reviews/review-list/review-list';
+import DashboardWidgetsContainer from './../../components/dashboard-widgets-container';
+import BadgeAvatars from './../../components/shared/avatar';
+import { connect } from 'react-redux';
+import { actionGetReviews } from './../../actions/reviews';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -82,16 +86,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Dashboard() {
+function Dashboard(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  useEffect(() => {
+    props.actionGetReviews();
+  }, [])
   const handleDrawerOpen = () => {
+    props.actionGetReviews();
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
+    props.actionGetReviews();
     setOpen(false);
   };
 
@@ -135,6 +144,7 @@ function Dashboard() {
         }}
       >
         <div className={classes.toolbar}>
+          <BadgeAvatars />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -160,10 +170,14 @@ function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <ReviewList />
+        <DashboardWidgetsContainer reviews={props.reviews}/>
       </main>
     </div>
   );
 }
-
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+      reviews: state.reviews
+  }
+}
+export default connect(mapStateToProps, { actionGetReviews })(Dashboard);

@@ -13,7 +13,6 @@ function TotalReviewsPieChart(props) {
  return (
   <Paper style={{padding: '20px'}}>
     <Chart
-      width={'500px'}
       height={'300px'}
       chartType="PieChart"
       loader={<div>Loading Chart</div>}

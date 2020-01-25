@@ -12,10 +12,11 @@ function ReviewsStatusBarChart(props) {
  let barChartData = [['Review Type', 'Total Reviews', 'Resolved'], ...resolvedReviews];
  console.log(barChartData);
   return (
-   <Paper style={{padding: '20px'}}>
+   <Paper style={{padding: "20px"}}>
     <Chart
+      width={'100%'}
       height={'300px'}
-      chartType="Bar"
+      chartType="ColumnChart"
       loader={<div>Loading Chart</div>}
       data={barChartData}
       options={{

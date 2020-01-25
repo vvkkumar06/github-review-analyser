@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from './components/dashboard/dashboard';
+import Dashboard from './containers/dashboard';
 
 // const onSuccess = response => {
 

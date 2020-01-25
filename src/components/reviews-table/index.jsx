@@ -8,7 +8,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 
-function Reviews(props) {
+function ReviewsTable(props) {
     const columns = [
         { id: 'avatar_url', label: `Reviewer`, minWidth: 50, align: 'center' },
         { id: 'body', label: 'Comment', minWidth: 100 },
@@ -98,4 +98,4 @@ function Reviews(props) {
     )
 }
 
-export default Reviews;
+export default ReviewsTable;
