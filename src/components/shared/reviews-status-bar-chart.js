@@ -10,7 +10,6 @@ function ReviewsStatusBarChart(props) {
  });
 
  let barChartData = [['Review Type', 'Total Reviews', 'Resolved'], ...resolvedReviews];
- console.log(barChartData);
   return (
    <Paper style={{padding: "20px"}}>
     <Chart

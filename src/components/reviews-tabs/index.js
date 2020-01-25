@@ -21,7 +21,6 @@ function ReviewsTabs({reviews}) {
     }
     return (
         <Paper>
-        {console.log('value', value)}
             <Grid container spacing={2} >
                 <Grid item xs="3" xm="3" md="2" lg="2">
                     <Tabs value={value} orientation="vertical" variant="scrollable" onChange={handleChange} >

@@ -50,7 +50,6 @@ function ReviewsTable(props) {
                             return (
                                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                     {columns.map(column => {
-                                        console.log(row);
                                         let isAvatarUrl = false;
                                         let value = row[column.id];
                                         if (column.id === 'avatar_url') {

@@ -18,17 +18,15 @@ class DashboardWidgetContainer extends Component {
         const { reviews } = this.props;
         const { value } = this.state;
         return (
-            <Grid container spacing={2} >
+            <Grid container spacing={5} >
                 <Grid item xs={12} sm={12} md={6}>
                     <TotalReviewsPieChart reviews={reviews} />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
                     <ReviewsStatusBarChart reviews={reviews} />
                 </Grid>
-                <Grid item xs={12} style={{ margin: "50px" }}>
-                    <Grid container spacing={3} >
-                        <ReviewsCounterContainer reviews={reviews}/>
-                    </Grid>
+                <Grid item xs={12}>
+                    <ReviewsCounterContainer reviews={reviews}/>
                 </Grid>
                 <Grid item xs="12" >
                     <ReviewsTabs reviews={reviews} />
