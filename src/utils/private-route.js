@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { getUserDetail } from './../services/reviews';
 export default function PrivateRoute({ children, ...rest }) {

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -19,9 +19,10 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Constants from './../../utils/constants';
 import DashboardWidgetsContainer from './../../components/dashboard-widgets-container';
-import BadgeAvatars from './../../components/shared/avatar';
+import OnlineAvatar from './../../components/shared/avatar';
 import { connect } from 'react-redux';
 import { actionGetReviews } from './../../actions/reviews';
+import { actionGetUser } from './../../actions/user';
 
 const drawerWidth = 240;
 
@@ -93,6 +94,7 @@ function Dashboard(props) {
 
   useEffect(() => {
     props.actionGetReviews();
+    props.actionGetUser();
   }, [])
   const handleDrawerOpen = () => {
     props.actionGetReviews();
@@ -144,7 +146,7 @@ function Dashboard(props) {
         }}
       >
         <div className={classes.toolbar}>
-          <BadgeAvatars />
+          <OnlineAvatar />
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -170,14 +172,15 @@ function Dashboard(props) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <DashboardWidgetsContainer reviews={props.reviews}/>
+        <DashboardWidgetsContainer reviews={props.reviews} />
       </main>
     </div>
   );
 }
 const mapStateToProps = state => {
   return {
-      reviews: state.reviews
+    reviews: state.reviews,
+    user: state.user
   }
 }
-export default connect(mapStateToProps, { actionGetReviews })(Dashboard);
+export default connect(mapStateToProps, { actionGetReviews, actionGetUser })(Dashboard);
