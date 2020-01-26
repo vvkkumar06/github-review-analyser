@@ -5,7 +5,7 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import { FormControl, InputLabel, Select, MenuItem} from '@material-ui/core'
+import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -24,6 +24,7 @@ import OnlineAvatar from './../../components/shared/avatar';
 import { connect } from 'react-redux';
 import { actionGetReviews } from './../../actions/reviews';
 import { actionGetUser } from './../../actions/user';
+import { actionGetRepositories, actionSetCurrentRepository } from './../../actions/repositories';
 
 const drawerWidth = 240;
 
@@ -86,25 +87,37 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  select: {
+    borderBottom: '#fff'
+  },
+  icon: {
+    color: '#fff'
+  },
 }));
 
 function Dashboard(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const [repository, setRepository] = React.useState('');
+  const username = props.user.data && props.user.data.login;
   useEffect(() => {
-    props.actionGetReviews();
+    props.actionGetReviews(repository, username, 'all');
     props.actionGetUser();
-  }, [])
+    props.actionGetRepositories();
+  }, [repository])
   const handleDrawerOpen = () => {
-    props.actionGetReviews();
+    props.actionGetReviews(repository, username, 'all');
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
-    props.actionGetReviews();
+    props.actionGetReviews(repository, username, 'all');
     setOpen(false);
+  };
+
+  const onRepositoryChange = event => {
+    setRepository(event.target.value);
   };
 
   return (
@@ -132,17 +145,22 @@ function Dashboard(props) {
             {Constants.APP_NAME}
           </Typography>
           <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
-            <FormControl className={classes.formControl} style={{width: '200px', marginLeft: '20px'}}>
+            <FormControl className={classes.formControl} style={{ width: '300px', marginLeft: '20px' }}>
               <Select
-                style={{borderBottom: '1px solid #fff'}}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value='test repository'
-                // onChange={handleChange}
+                value={repository}
+                classes={{
+                  icon: classes.icon
+                }}
+                style={{ borderBottom: '1px solid #fff', color: '#fff' }}
+                labelId="repository-select-label"
+                id="repository-select"
+                onChange={onRepositoryChange}
               >
-                <MenuItem value={10}>Contact Manager</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {
+                  props.repos.data && props.repos.data.map(repo => {
+                    return <MenuItem value={repo.name} key={repo.id}>{repo.name}</MenuItem>
+                  })
+                }
               </Select>
             </FormControl>
           </div>
@@ -170,7 +188,6 @@ function Dashboard(props) {
           </IconButton>
         </div>
         <Divider />
-        {console.log(props.user.data)}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <OnlineAvatar image={props.user.data && props.user.data.avatar_url} large={open} />
         </div>
@@ -206,7 +223,9 @@ function Dashboard(props) {
 const mapStateToProps = state => {
   return {
     reviews: state.reviews,
-    user: state.user
+    user: state.user,
+    repos: state.repos,
+    currentRepo: state.currentRepo
   }
 }
-export default connect(mapStateToProps, { actionGetReviews, actionGetUser })(Dashboard);
+export default connect(mapStateToProps, { actionGetReviews, actionGetUser, actionGetRepositories, actionSetCurrentRepository })(Dashboard);

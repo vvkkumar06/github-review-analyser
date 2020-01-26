@@ -2,8 +2,9 @@ import { getReviews } from './../services/reviews'
 import actionTypes  from './types';
 const {GET_REVIEWS} = actionTypes;
 
-export const actionGetReviews= () => dispatch => {
-    getReviews().then( reviews => {
+export const actionGetReviews= (repo, username, pr) => dispatch => {
+    console.log('repo', repo)
+    getReviews(repo, username, pr).then( reviews => {
             dispatch({
                 type: GET_REVIEWS,
                 payload: categorizeReviews(reviews.data)

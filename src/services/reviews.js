@@ -1,9 +1,9 @@
 import axios from 'axios';
 const baseUrl = 'https://api.github.com/';
-export const getReviews = () => {
+export const getReviews = (repo, username, pr ='all') => {
     return axios({
         method: 'get',
-        url: `${baseUrl}repos/vvkkumar06/contact-manager/pulls/comments`,
+        url: pr =='all' && `${baseUrl}repos/${username}/${repo}/pulls/comments`,
         headers: {
             'Authorization': `TOKEN ${localStorage.getItem('token')}`
         }
