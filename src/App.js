@@ -19,10 +19,10 @@ function App({ children, ...rest }) {
     <div className="App" >
       <Router>
         <Switch>
-          <PrivateRoute path="/dashboard">
+          <PrivateRoute path="/dashboard" >
             <Dashboard />
           </PrivateRoute>
-          <Route path="" exact>
+          <Route path="" >
             <ReactGithubAuth
               title='Login with github'
               onSuccess={onSuccess}

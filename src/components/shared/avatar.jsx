@@ -2,7 +2,6 @@ import React from 'react';
 import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import avatar from './../../statics/images/avatar.jpg';
 
 const StyledBadge = withStyles(theme => ({
   badge: {
@@ -56,7 +55,7 @@ export default function OnlineAvatar(props) {
         }}
         variant="dot"
       >
-        <Avatar alt="Vivek Kumar" src={avatar} />
+        <Avatar variant="square" alt="Vivek Kumar" src={props.image} style={{width: props.large ? '200px' : '40px', height: props.large? '200px' : '40px'}}/>
       </StyledBadge>
     </div>
   );

@@ -5,6 +5,7 @@ import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
+import { FormControl, InputLabel, Select, MenuItem} from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -127,9 +128,24 @@ function Dashboard(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap style={{ display: 'flex', justifyContent: 'flex-end', minWidth: '220px' }}>
             {Constants.APP_NAME}
           </Typography>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+            <FormControl className={classes.formControl} style={{width: '200px', marginLeft: '20px'}}>
+              <Select
+                style={{borderBottom: '1px solid #fff'}}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value='test repository'
+                // onChange={handleChange}
+              >
+                <MenuItem value={10}>Contact Manager</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -146,11 +162,21 @@ function Dashboard(props) {
         }}
       >
         <div className={classes.toolbar}>
-          <OnlineAvatar />
+          <Typography variant="h6" noWrap >
+            {props.user.data && props.user.data.name}
+          </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
+        <Divider />
+        {console.log(props.user.data)}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <OnlineAvatar image={props.user.data && props.user.data.avatar_url} large={open} />
+        </div>
+        {open && <Typography variant="subtitle1" style={{ textAlign: 'center' }}>
+          {props.user.data && props.user.data.bio}
+        </Typography>}
         <Divider />
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
